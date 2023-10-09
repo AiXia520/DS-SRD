@@ -32,26 +32,25 @@ CUDA_VISIBLE_DEVICES=0 python main_lincls_ws.py 'data' --dataset cifar10  -a res
 
 1. Fetch the pretrained teacher models by:
 
-    ```
-    sh scripts/fetch_pretrained_teachers.sh
-    ```
+```
+sh scripts/fetch_pretrained_teachers.sh
+```
 which will download and save the models to `save/models`
 
 2. Run distillation by following commands
-    ```
-     CUDA_VISIBLE_DEVICES=0 python train_student_ds.py --model_t resnet32x4 --model_s resnet8x4 --trial 1
-    CUDA_VISIBLE_DEVICES=0 python train_student_ds.py --model_t wrn_40_2 --model_s wrn_16_2 --trial 1
-    
-    CUDA_VISIBLE_DEVICES=0 python train_student_ds.py --model_t resnet32x4 --model_s ShuffleV1 --trial 1
-    CUDA_VISIBLE_DEVICES=0 python train_student_ds.py --model_t wrn_40_2 --model_s ShuffleV1 --trial 1
-    ```
+```
+CUDA_VISIBLE_DEVICES=0 python train_student_ds.py --model_t resnet32x4 --model_s resnet8x4 --trial 1
+CUDA_VISIBLE_DEVICES=0 python train_student_ds.py --model_t wrn_40_2 --model_s wrn_16_2 --trial 1
+CUDA_VISIBLE_DEVICES=0 python train_student_ds.py --model_t resnet32x4 --model_s ShuffleV1 --trial 1
+CUDA_VISIBLE_DEVICES=0 python train_student_ds.py --model_t wrn_40_2 --model_s ShuffleV1 --trial 1
+```
 
 # DS-SRD with data augmentation
 
 ## Running
 
 ```
-   CUDA_VISIBLE_DEVICES=0 python train_student_ds_srd.py --path_t ./save/models/wrn_40_2_vanilla/ckpt_epoch_240.pth --distill crd --model_s wrn_16_2 -r 0.1 -a 0.9 -b 0.8 -c 0.8 --t_output_as_target_for_input_mix --lw_mix [1,0,1] --mix_mode identity --project kd__wrn_40_2wrn_16_2__cifar100__identity --warmup_epoch 10 --save_entropy_log_step 0 --low-dim 128 --epochs 240
+CUDA_VISIBLE_DEVICES=0 python train_student_ds_srd.py --path_t ./save/models/wrn_40_2_vanilla/ckpt_epoch_240.pth --distill crd --model_s wrn_16_2 -r 0.1 -a 0.9 -b 0.8 -c 0.8 --t_output_as_target_for_input_mix --lw_mix [1,0,1] --mix_mode identity --project kd__wrn_40_2wrn_16_2__cifar100__identity --warmup_epoch 10 --save_entropy_log_step 0 --low-dim 128 --epochs 240
 
 CUDA_VISIBLE_DEVICES=0 python train_student_ds_srd.py --path_t ./save/models/wrn_40_2_vanilla/ckpt_epoch_240.pth --distill crd --model_s wrn_16_2 -r 0.1 -a 0.9 -b 0.8 -c 0.8 --t_output_as_target_for_input_mix --lw_mix [1,0,1] --mix_mode flip --project kd__wrn_40_2wrn_16_2__cifar100__flip --warmup_epoch 10 --save_entropy_log_step 0 --low-dim 128 --epochs 240
 
